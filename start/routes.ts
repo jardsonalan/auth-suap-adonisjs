@@ -19,3 +19,4 @@ router.get('/', async () => {
 
 router.post('/login', [AuthController, 'login'])
 router.get('/data', [AuthController, 'getData'])
+router.get('/logout', [AuthController, 'logout'])
