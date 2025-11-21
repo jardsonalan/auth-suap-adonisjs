@@ -51,10 +51,6 @@ export default class AuthController {
   async getData({ request, response }: HttpContext) {
     let token = request.cookie('suap_token') // Tenta obter o token do cookie
 
-    if (!token) {
-      return response.unauthorized({ message: 'Não autenticado' })
-    }
-
     const suap = new SuapService()
 
     try {

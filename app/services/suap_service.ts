@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 export class SuapService {
-  private baseUrl: string = 'https://suap.ifrn.edu.br/api'
+  private static baseUrl: string = 'https://suap.ifrn.edu.br/api'
 
   async login(username: string, password: string) {
-    const response = await axios.post(`${this.baseUrl}/token/pair`, {
+    const response = await axios.post(`${SuapService.baseUrl}/token/pair`, {
       username,
       password,
     })
@@ -12,12 +12,23 @@ export class SuapService {
   }
 
   async getData(token: string) {
-    const response = await axios.get(`${this.baseUrl}/eu/`, {
+    const response = await axios.get(`${SuapService.baseUrl}/eu/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
 
     return response.data
+  }
+
+  static async verifyToken(token: string) {
+    try {
+      const response = await axios.post(`${SuapService.baseUrl}/token/verify`, {
+        token,
+      })
+      return response.status === 200
+    } catch {
+      return false
+    }
   }
 }
